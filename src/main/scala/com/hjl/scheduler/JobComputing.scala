@@ -1,5 +1,8 @@
 package com.hjl.scheduler
 
+import java.util.Properties
+
+import com.typesafe.config.{Config, ConfigFactory}
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.{SparkConf, SparkContext}
 
@@ -13,9 +16,19 @@ class JobComputing {
   var conf: SparkConf = _
   var sc: SparkContext = _
   var sqlContext: SQLContext = _
+  var load: Config = _
 
-  def checkParam(args: Array[String]): Unit ={
-    if(args.length != 2){
+  def getMysqlProperties(): Properties ={
+    load = ConfigFactory.load
+    val prop = new Properties()
+    prop.put("user",load.getString("jdbc.user"))
+    prop.put("password",load.getString("jdbc.password"))
+    prop.put("driver",load.getString("jdbc.driver"))
+    prop
+  }
+
+  def checkParam(args: Array[String], num: Int): Unit ={
+    if(args.length != num){
       println("目录参数不正确,退出程序!")
       sys.exit()
     }
@@ -53,7 +66,7 @@ class JobComputing {
 
   def initSparkConf(appName: String ,flag: Boolean = false): Unit ={
     if (!flag) {
-      conf = new SparkConf().setAppName(appName).setMaster("local[2]")
+      conf = new SparkConf().setAppName(appName).setMaster("local[*]")
     } else {
       conf = new SparkConf()
           .setAppName(appName)

@@ -20,7 +20,7 @@ object Bz2Parquet extends JobComputing{
   def main(args: Array[String]): Unit = {
 
     // 检测参数,接受参数
-    checkParam(args)
+    checkParam(args, 2)
     val Array(inputPath,outputPath) = args
     // 初始化环境
     initAll(this.getClass.getName, true)
