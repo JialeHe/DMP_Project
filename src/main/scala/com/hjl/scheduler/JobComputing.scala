@@ -66,11 +66,12 @@ class JobComputing {
 
   def initSparkConf(appName: String ,flag: Boolean = false): Unit ={
     if (!flag) {
-      conf = new SparkConf().setAppName(appName).setMaster("local[*]")
+      conf = new SparkConf().setAppName(appName)
+        .setMaster("local[*]")
     } else {
       conf = new SparkConf()
           .setAppName(appName)
-          .setMaster("local[2]")
+          .setMaster("local[*]")
           .set("spark.serializer","org.apache.spark.serializer.KryoSerializer")
     }
   }
