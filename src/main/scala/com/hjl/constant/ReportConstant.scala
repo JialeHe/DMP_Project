@@ -25,5 +25,4 @@ object ReportConstant {
   final val MEDIA_SINK_JSON_PATH = "hdfs://mini04:9000/DMP/repurtout/media"
 
 
-
 }

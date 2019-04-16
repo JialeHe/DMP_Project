@@ -10,11 +10,11 @@ import org.apache.spark.sql.DataFrame
   * @date 2019/04/09
   * @email jiale.he@mail.hypers.com
   */
-object LocationReportOperator extends JobComputing{
+object LocationReportOperator extends JobComputing {
   def main(args: Array[String]): Unit = {
-    checkParam(args,2)
+    checkParam(args, 2)
     val Array(inputPath, outputPath) = args
-    initAll(this.getClass.getName,true)
+    initAll(this.getClass.getName, true)
 
     val sourceDF: DataFrame = sqlContext.read.parquet(inputPath)
 
@@ -36,11 +36,11 @@ object LocationReportOperator extends JobComputing{
       val adList = LocationUtil.adDspUtil(iseffective, isbilling, isbid, iswin, adorderid, winprice, adpayment)
       val clickList = LocationUtil.showClickUtil(requestmode, iseffective)
 
-      ((provincename, cityname), requestList++adList++clickList)
+      ((provincename, cityname), requestList ++ adList ++ clickList)
     })
       .reduceByKey((list1, list2) => {
-        list1.zip(list2).map(t => t._1+t._2)
-      }).map(t => t._1._1+","+t._1._2+","+t._2.mkString(","))
+        list1.zip(list2).map(t => t._1 + t._2)
+      }).map(t => t._1._1 + "," + t._1._2 + "," + t._2.mkString(","))
       .saveAsTextFile(outputPath)
 
     stopSparkContext()

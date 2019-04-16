@@ -17,7 +17,7 @@ import redis.clients.jedis.Jedis
   * @date 2019/04/15
   * @email jiale.he@mail.hypers.com
   */
-object MediaReport2 extends JobComputing{
+object MediaReport2 extends JobComputing {
   def main(args: Array[String]): Unit = {
 
     initAll(this.getClass.getName, flag = true)
@@ -74,7 +74,7 @@ object MediaReport2 extends JobComputing{
 
     val prop: Properties = getMysqlProperties()
     resultDF.coalesce(1).write.mode(SaveMode.Overwrite).json(ReportConstant.MEDIA_SINK_JSON_PATH)
-    resultDF.write.mode(SaveMode.Append).jdbc(load.getString("jdbc.url"),ReportConstant.MEDIA_SINK_TABLE_NAME,prop)
+    resultDF.write.mode(SaveMode.Append).jdbc(load.getString("jdbc.url"), ReportConstant.MEDIA_SINK_TABLE_NAME, prop)
 
     stopSparkContext()
 

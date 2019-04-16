@@ -16,12 +16,12 @@ import org.apache.spark.sql.{DataFrame, Row}
   * @date 2019/04/09
   * @email jiale.he@mail.hypers.com
   */
-object Bz2Parquet extends JobComputing{
+object Bz2Parquet extends JobComputing {
   def main(args: Array[String]): Unit = {
 
     // 检测参数,接受参数
     checkParam(args, 2)
-    val Array(inputPath,outputPath) = args
+    val Array(inputPath, outputPath) = args
     // 初始化环境
     initAll(this.getClass.getName, true)
 

@@ -16,11 +16,11 @@ import org.apache.spark.sql.{DataFrame, SaveMode}
   * @date 2019/04/09
   * @email jiale.he@mail.hypers.com
   */
-object LocationReport extends JobComputing{
+object LocationReport extends JobComputing {
   def main(args: Array[String]): Unit = {
     checkParam(args, 2)
     val Array(inputPath, outputPath) = args
-    initAll(this.getClass.getName,true)
+    initAll(this.getClass.getName, true)
 
     val sourceDF: DataFrame = sqlContext.read.parquet(inputPath)
     sourceDF.registerTempTable(ReportConstant.TEMP)

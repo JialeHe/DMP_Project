@@ -11,7 +11,7 @@ import redis.clients.jedis.Jedis
   * @date 2019/04/12
   * @email jiale.he@mail.hypers.com
   */
-object App2Redis extends JobComputing{
+object App2Redis extends JobComputing {
   def main(args: Array[String]): Unit = {
     checkParam(args, 1)
     initAll(this.getClass.getName)
@@ -20,7 +20,7 @@ object App2Redis extends JobComputing{
     // 获取字典文件数据
     val dirRDD: RDD[String] = sc.textFile(dirPath)
 
-    dirRDD.map(_.split("\t",-1))
+    dirRDD.map(_.split("\t", -1))
       .filter(_.length >= 5)
       .map(arr => (arr(4).trim, arr(1).trim))
       .foreachPartition(partition => {

@@ -12,7 +12,7 @@ import org.apache.spark.sql.{DataFrame, SaveMode}
   * @date 2019/04/12
   * @email jiale.he@mail.hypers.com
   */
-object EquipmentReport extends JobComputing{
+object EquipmentReport extends JobComputing {
   def main(args: Array[String]): Unit = {
     checkParam(args, 2)
     initAll(this.getClass.getName, true)
@@ -45,7 +45,7 @@ object EquipmentReport extends JobComputing{
     val prop: Properties = getMysqlProperties()
 
     resultDF.repartition(1).write.mode(SaveMode.Overwrite).json(outputPath)
-    resultDF.write.mode(SaveMode.Overwrite).jdbc(load.getString("jdbc.url"),ReportConstant.EQUIPMENT_SINK_TABLE_NAME,prop)
+    resultDF.write.mode(SaveMode.Overwrite).jdbc(load.getString("jdbc.url"), ReportConstant.EQUIPMENT_SINK_TABLE_NAME, prop)
 
     stopSparkContext()
 

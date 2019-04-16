@@ -16,7 +16,7 @@ import redis.clients.jedis.Jedis
   * @date 2019/04/12
   * @email jiale.he@mail.hypers.com
   */
-object MediaReport extends JobComputing{
+object MediaReport extends JobComputing {
   def main(args: Array[String]): Unit = {
 
     initAll(this.getClass.getName, true)
@@ -37,7 +37,7 @@ object MediaReport extends JobComputing{
 
     val appDF: DataFrame = sqlContext.createDataFrame(appRow, schema).coalesce(20)
 
-    val resultDF = sourceDf.coalesce(20).drop("appname").join(appDF,"appid")
+    val resultDF = sourceDf.coalesce(20).drop("appname").join(appDF, "appid")
 
     resultDF.registerTempTable(ReportConstant.TEMP)
 
@@ -61,7 +61,7 @@ object MediaReport extends JobComputing{
 
     val prop: Properties = getMysqlProperties()
     resDF.coalesce(1).write.mode(SaveMode.Overwrite).json(ReportConstant.MEDIA_SINK_JSON_PATH)
-    resDF.write.mode(SaveMode.Append).jdbc(load.getString("jdbc.url"),ReportConstant.MEDIA_SINK_TABLE_NAME,prop)
+    resDF.write.mode(SaveMode.Append).jdbc(load.getString("jdbc.url"), ReportConstant.MEDIA_SINK_TABLE_NAME, prop)
 
     stopSparkContext()
 

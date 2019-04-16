@@ -10,18 +10,18 @@ import com.hjl.scheduler.JobComputing
   * @date 2019/04/08
   * @email jiale.he@mail.hypers.com
   */
-object GitTest extends JobComputing{
+object GitTest extends JobComputing {
   def main(args: Array[String]): Unit = {
 
-    val list1: List[Double] = List[Double](1,2,3,4)
-    val list2: List[Double] = List[Double](0,0,0,0)
+    val list1: List[Double] = List[Double](1, 2, 3, 4)
+    val list2: List[Double] = List[Double](0, 0, 0, 0)
 
-    val res1: List[Double] = list1++list2
+    val res1: List[Double] = list1 ++ list2
 
-    val list3: List[Double] = List[Double](1,2,3,4)
-    val list4: List[Double] = List[Double](0,0,0,0)
+    val list3: List[Double] = List[Double](1, 2, 3, 4)
+    val list4: List[Double] = List[Double](0, 0, 0, 0)
 
-    val res2: List[Double] = list3++list4
+    val res2: List[Double] = list3 ++ list4
 
     println(res1)
     println(res2)
@@ -37,9 +37,9 @@ object GitTest extends JobComputing{
 
 
   def getJsonTime(timestamp: String): String = {
-    if (timestamp == ""){
+    if (timestamp == "") {
       ""
-    }else{
+    } else {
       val format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
       format.format(timestamp.toLong)
     }

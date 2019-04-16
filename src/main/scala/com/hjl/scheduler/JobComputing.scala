@@ -18,61 +18,61 @@ class JobComputing {
   var sqlContext: SQLContext = _
   var load: Config = _
 
-  def getMysqlProperties(): Properties ={
+  def getMysqlProperties(): Properties = {
     load = ConfigFactory.load
     val prop = new Properties()
-    prop.put("user",load.getString("jdbc.user"))
-    prop.put("password",load.getString("jdbc.password"))
-    prop.put("driver",load.getString("jdbc.driver"))
+    prop.put("user", load.getString("jdbc.user"))
+    prop.put("password", load.getString("jdbc.password"))
+    prop.put("driver", load.getString("jdbc.driver"))
     prop
   }
 
-  def checkParam(args: Array[String], num: Int): Unit ={
-    if(args.length != num){
+  def checkParam(args: Array[String], num: Int): Unit = {
+    if (args.length != num) {
       println("目录参数不正确,退出程序!")
       sys.exit()
     }
   }
 
-  def initAll(appName: String, flag: Boolean= false): Unit ={
-    if (!flag){
+  def initAll(appName: String, flag: Boolean = false): Unit = {
+    if (!flag) {
       initSparkConf(appName)
       initSparkContext(appName)
       initSQLContext()
-    }else {
+    } else {
       initSparkConf(appName, true)
       initSparkContext(appName)
       initSQLContext(true)
     }
   }
 
-  def initSQLContext(flag: Boolean = false) ={
-    if (!flag){
+  def initSQLContext(flag: Boolean = false) = {
+    if (!flag) {
       sqlContext = new SQLContext(sc)
-    }else {
+    } else {
       sqlContext = new SQLContext(sc)
-      sqlContext.setConf("spark.io.compression.codec","snappy")
+      sqlContext.setConf("spark.io.compression.codec", "snappy")
     }
   }
 
-  def stopSparkContext(): Unit ={
+  def stopSparkContext(): Unit = {
     sc.stop()
   }
 
-  def initSparkContext(appName: String): Unit ={
+  def initSparkContext(appName: String): Unit = {
     sc = new SparkContext(conf)
   }
 
 
-  def initSparkConf(appName: String ,flag: Boolean = false): Unit ={
+  def initSparkConf(appName: String, flag: Boolean = false): Unit = {
     if (!flag) {
       conf = new SparkConf().setAppName(appName)
         .setMaster("local[*]")
     } else {
       conf = new SparkConf()
-          .setAppName(appName)
-          .setMaster("local[*]")
-          .set("spark.serializer","org.apache.spark.serializer.KryoSerializer")
+        .setAppName(appName)
+        .setMaster("local[*]")
+        .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
     }
   }
 

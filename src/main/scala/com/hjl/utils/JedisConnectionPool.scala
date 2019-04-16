@@ -20,7 +20,7 @@ object JedisConnectionPool {
   // 创建jedis连接池
   val pool = new JedisPool(conf, CommonConstant.REDIS_HOST, CommonConstant.REDIS_PORT, 10000)
 
-  def getConnect: Jedis ={
+  def getConnect: Jedis = {
     pool.getResource
   }
 }

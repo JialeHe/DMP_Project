@@ -9,10 +9,10 @@ import org.apache.spark.sql.{DataFrame, SaveMode}
 /**
   *
   * @author jiale.he
-  * date 2019/04/12
-  * email jiale.he@mail.hypers.com
+  *         date 2019/04/12
+  *         email jiale.he@mail.hypers.com
   */
-object OperatorReport extends JobComputing{
+object OperatorReport extends JobComputing {
   def main(args: Array[String]): Unit = {
     checkParam(args, 2)
     initAll(this.getClass.getName, true)
@@ -41,7 +41,7 @@ object OperatorReport extends JobComputing{
     val prop: Properties = getMysqlProperties()
 
     resultDF.repartition(1).write.mode(SaveMode.Append).json(outputPath)
-    resultDF.write.mode(SaveMode.Append).jdbc(load.getString("jdbc.url"),ReportConstant.OPERATOR_SINK_TABLE_NAME,prop)
+    resultDF.write.mode(SaveMode.Append).jdbc(load.getString("jdbc.url"), ReportConstant.OPERATOR_SINK_TABLE_NAME, prop)
 
     stopSparkContext()
   }
