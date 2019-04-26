@@ -1,6 +1,7 @@
-package com.hjl.scheduler.tag
+package com.hjl.scheduler.tag.tagcomputing
 
 import com.hjl.constant.TagConstant._
+import com.hjl.scheduler.tag.Tag
 import org.apache.commons.lang.StringUtils
 import org.apache.spark.broadcast.Broadcast
 import org.apache.spark.sql.Row
@@ -28,6 +29,7 @@ object AppTag extends Tag {
     if (StringUtils.isBlank(appname) || StringUtils.contains(appname, SEARCH_STR)) {
       appname = appdirBroadcast.value.getOrElse(appid, DEFAULT_VALUE)
     }
+    list :+= (APP.concat(appname),1)
     list
   }
 }

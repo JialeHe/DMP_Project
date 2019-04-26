@@ -12,6 +12,13 @@ object TagConstant {
   final val DEFAULT_NUM = 9999
   final val SEARCH_STR = "com"
 
+  final val AK = "ABiIl3LnSMkCiFO7YbFsIahAZLVwvvC8"
+  final val SK = "mvvItoDTpKSQNqq05gbrtwXKp9btOwR0"
+
+  // business
+  final val LONG = "long"
+  final val LAT = "lat"
+
   // userid
   final val IMEI = "imei"
   final val MAC = "mac"
@@ -85,4 +92,15 @@ object TagConstant {
   final val UNICOM = "联通 D00030002"
   final val TELECOM = "电信 D00030003"
   final val OTHERCOM = "其他 D00030004"
+
+  // keyword
+  final val KEYWORDS = "keywords"
+  final val K = "K "
+
+  // location
+  final val PROVINCENAME = "provincename"
+  final val CITYNAME = "cityname"
+  final val ZP = "ZP "
+  final val ZC = "ZC "
+
 }

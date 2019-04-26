@@ -12,27 +12,14 @@ import com.hjl.scheduler.JobComputing
   */
 object GitTest extends JobComputing {
   def main(args: Array[String]): Unit = {
-
-    val list1: List[Double] = List[Double](1, 2, 3, 4)
-    val list2: List[Double] = List[Double](0, 0, 0, 0)
-
-    val res1: List[Double] = list1 ++ list2
-
-    val list3: List[Double] = List[Double](1, 2, 3, 4)
-    val list4: List[Double] = List[Double](0, 0, 0, 0)
-
-    val res2: List[Double] = list3 ++ list4
-
-    println(res1)
-    println(res2)
-
-    val zip1: List[(Double, Double)] = res1.zip(res2)
-    println(zip1)
-
-    val map1: List[Double] = zip1.map(t => t._1 + t._2)
-    println(map1)
-
-
+    val str = "10.1".toDouble
+    val double: BigDecimal = BigDecimal(str)
+    //println(str)
+//    val newMap = scala.collection.mutable.HashMap[String, BigDecimal]()
+//    newMap.put("hejiale", BigDecimal("  0 ".trim))
+//    newMap.foreach(println)
+    val string: String = true.toString
+    println(string)
   }
 
 

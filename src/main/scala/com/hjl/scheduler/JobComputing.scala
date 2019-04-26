@@ -51,7 +51,7 @@ class JobComputing {
       sqlContext = new SQLContext(sc)
     } else {
       sqlContext = new SQLContext(sc)
-      sqlContext.setConf("spark.io.compression.codec", "snappy")
+      sqlContext.setConf("spark.io.compression.snappy.codec", "snappy")
     }
   }
 
@@ -71,8 +71,8 @@ class JobComputing {
     } else {
       conf = new SparkConf()
         .setAppName(appName)
-        .setMaster("local[*]")
-        .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+//        .setMaster("local[*]")
+        //.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
     }
   }
 

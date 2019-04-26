@@ -1,6 +1,7 @@
-package com.hjl.scheduler.tag
+package com.hjl.scheduler.tag.tagcomputing
 
 import com.hjl.constant.TagConstant._
+import com.hjl.scheduler.tag.Tag
 import org.apache.spark.sql.Row
 
 /**

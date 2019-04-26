@@ -1,8 +1,9 @@
-package com.hjl.scheduler.tag
+package com.hjl.scheduler.tag.tagcomputing
 
-import org.apache.spark.sql.Row
-import com.hjl.constant.TagConstant._
+import com.hjl.constant.TagConstant.{ADPLATFORMPROVIDERID, CN, DEFAULT_VALUE}
+import com.hjl.scheduler.tag.Tag
 import org.apache.commons.lang.StringUtils
+import org.apache.spark.sql.Row
 
 /**
   *
