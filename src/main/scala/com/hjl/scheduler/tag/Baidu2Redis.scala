@@ -4,6 +4,7 @@ import ch.hsr.geohash.GeoHash
 import com.hjl.constant.{CommonConstant, TagConstant}
 import com.hjl.scheduler.JobComputing
 import com.hjl.utils.{BaiduLBSHandler, JedisConnectionPool}
+import org.slf4j.{Logger, LoggerFactory}
 import redis.clients.jedis.Jedis
 
 /**
@@ -12,8 +13,10 @@ import redis.clients.jedis.Jedis
   * @date 2019/04/25
   * @email jiale.he@mail.hypers.com
   */
-object Baidu2Redis extends JobComputing {
-  def main(args: Array[String]): Unit = {
+class Baidu2Redis extends JobComputing {
+  private val logger: Logger = LoggerFactory.getLogger(classOf[Baidu2Redis])
+
+  override def process(): Unit = {
     initAll(this.getClass.getName, flag = true)
     sqlContext.read.parquet(CommonConstant.PARQUET_SOURCE_PATH)
       .select(TagConstant.LONG, TagConstant.LAT)
@@ -24,18 +27,18 @@ object Baidu2Redis extends JobComputing {
         """.stripMargin)
       .distinct()
       .repartition(50)
-//      .repartition(100)
+      //      .repartition(100)
       .foreachPartition(partition => {
-        val jedis: Jedis = JedisConnectionPool.getConnect
-        partition.foreach(row => {
-          val long = row.getAs[String](TagConstant.LONG)
-          val lat = row.getAs[String](TagConstant.LAT)
-          val geoHash: String = GeoHash.geoHashStringWithCharacterPrecision(lat.toDouble, long.toDouble, 8)
-          val baiduSN = BaiduLBSHandler.parseBusinessTagBy(long, lat)
-          jedis.hset("tag2", geoHash, baiduSN)
-        })
-        jedis.close()
+      val jedis: Jedis = JedisConnectionPool.getConnect
+      partition.foreach(row => {
+        val long = row.getAs[String](TagConstant.LONG)
+        val lat = row.getAs[String](TagConstant.LAT)
+        val geoHash: String = GeoHash.geoHashStringWithCharacterPrecision(lat.toDouble, long.toDouble, 8)
+        val baiduSN = BaiduLBSHandler.parseBusinessTagBy(long, lat)
+        jedis.hset("tag2", geoHash, baiduSN)
       })
+      jedis.close()
+    })
     stopSparkContext()
   }
 }

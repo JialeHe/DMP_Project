@@ -17,12 +17,14 @@ object ReportConstant {
 
   final val PARQUET_SOURCE_PATH = "hdfs://mini04:9000/DMP/out"
 
-  final val LOCATION_SINK_JSON_PATH = "hdfs://mini04:9000/DMP/repurtout/location"
-  final val OPERATOR_SINK_JSON_PATH = "hdfs://mini04:9000/DMP/repurtout/operator"
-  final val NETWORK_SINK_JSON_PATH = "hdfs://mini04:9000/DMP/repurtout/network"
-  final val EQUIPMENT_SINK_JSON_PATH = "hdfs://mini04:9000/DMP/repurtout/equipment"
-  final val OS_SINK_JSON_PATH = "hdfs://mini04:9000/DMP/repurtout/os"
-  final val MEDIA_SINK_JSON_PATH = "hdfs://mini04:9000/DMP/repurtout/media"
+  final val LOCATION_SINK_JSON_PATH = "hdfs://mini04:9000/DMP/reportout/location"
+  final val OPERATOR_SINK_JSON_PATH = "hdfs://mini04:9000/DMP/reportout/operator"
+  final val NETWORK_SINK_JSON_PATH = "hdfs://mini04:9000/DMP/reportout/network"
+  final val EQUIPMENT_SINK_JSON_PATH = "hdfs://mini04:9000/DMP/reportout/equipment"
+  final val OS_SINK_JSON_PATH = "hdfs://mini04:9000/DMP/reportout/os"
+  final val MEDIA_SINK_JSON_PATH = "hdfs://mini04:9000/DMP/reportout/media"
 
+  final val APP_ID = "appid"
+  final val APP_NAME = "appname"
 
 }

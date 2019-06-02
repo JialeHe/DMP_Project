@@ -5,5 +5,5 @@ spark-submit \
 --num-executors 2 \
 --driver-memory 1G \
 --executor-memory 2G \
---executor-cores 2 \
+--executor-cores 3 \
 --class com.hjl.scheduler.report.media.NetWorkReport

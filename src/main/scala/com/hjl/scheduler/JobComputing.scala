@@ -18,6 +18,8 @@ class JobComputing {
   var sqlContext: SQLContext = _
   var load: Config = _
 
+  def process():Unit = {}
+
   def getMysqlProperties(): Properties = {
     load = ConfigFactory.load
     val prop = new Properties()
@@ -71,8 +73,8 @@ class JobComputing {
     } else {
       conf = new SparkConf()
         .setAppName(appName)
-//        .setMaster("local[*]")
-        //.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+        .setMaster("local[*]")
+      //.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
     }
   }
 

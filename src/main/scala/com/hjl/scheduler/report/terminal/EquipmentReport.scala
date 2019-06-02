@@ -12,13 +12,15 @@ import org.apache.spark.sql.{DataFrame, SaveMode}
   * @date 2019/04/12
   * @email jiale.he@mail.hypers.com
   */
-object EquipmentReport extends JobComputing {
-  def main(args: Array[String]): Unit = {
-    checkParam(args, 2)
-    initAll(this.getClass.getName, true)
-    val Array(inputPath, outputPath) = args
+class EquipmentReport extends JobComputing {
 
-    val sourceDF: DataFrame = sqlContext.read.parquet(inputPath)
+
+  override def process(): Unit = {
+    //    checkParam(args, 2)
+    initAll(this.getClass.getName, true)
+    //    val Array(inputPath, outputPath) = args
+
+    val sourceDF: DataFrame = sqlContext.read.parquet(ReportConstant.PARQUET_SOURCE_PATH)
     sourceDF.registerTempTable(ReportConstant.TEMP)
 
     val sql: String =
@@ -44,11 +46,12 @@ object EquipmentReport extends JobComputing {
 
     val prop: Properties = getMysqlProperties()
 
-    resultDF.repartition(1).write.mode(SaveMode.Overwrite).json(outputPath)
+    resultDF.show(10)
+
+    resultDF.repartition(1).write.mode(SaveMode.Overwrite).json(ReportConstant.EQUIPMENT_SINK_JSON_PATH)
     resultDF.write.mode(SaveMode.Overwrite).jdbc(load.getString("jdbc.url"), ReportConstant.EQUIPMENT_SINK_TABLE_NAME, prop)
 
     stopSparkContext()
-
 
   }
 }

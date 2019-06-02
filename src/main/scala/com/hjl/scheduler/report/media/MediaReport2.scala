@@ -7,8 +7,8 @@ import com.hjl.scheduler.JobComputing
 import com.hjl.utils.{JedisConnectionPool, LocationUtil}
 import org.apache.commons.lang.StringUtils
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.types.{DoubleType, StringType, StructField, StructType}
 import org.apache.spark.sql.{DataFrame, Row, SaveMode}
+import org.apache.spark.sql.types.{DoubleType, StringType, StructField, StructType}
 import redis.clients.jedis.Jedis
 
 /**
@@ -17,13 +17,10 @@ import redis.clients.jedis.Jedis
   * @date 2019/04/15
   * @email jiale.he@mail.hypers.com
   */
-object MediaReport2 extends JobComputing {
-  def main(args: Array[String]): Unit = {
-
+class MediaReport2 extends JobComputing {
+  override def process(): Unit = {
     initAll(this.getClass.getName, flag = true)
-
     val sourceDf: DataFrame = sqlContext.read.parquet(ReportConstant.PARQUET_SOURCE_PATH)
-
     val listRDD: RDD[(String, List[Double])] = sourceDf.mapPartitions(partition => {
       val jedis: Jedis = JedisConnectionPool.getConnect
       partition.map(row => {
@@ -77,6 +74,5 @@ object MediaReport2 extends JobComputing {
     resultDF.write.mode(SaveMode.Append).jdbc(load.getString("jdbc.url"), ReportConstant.MEDIA_SINK_TABLE_NAME, prop)
 
     stopSparkContext()
-
   }
 }

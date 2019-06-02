@@ -8,6 +8,14 @@ package com.hjl.constant
   */
 object TagConstant {
 
+  final val REDIS_TAG_HKEY = "tag2"
+
+  final val HB_TABLE_NAME = "hbase.table.name"
+  final val HB_ZK_KEY = "hbase.zookeeper.quorum"
+  final val HB_ZK_VALUE = "hbase.zookeeper.host"
+  final val HB_NAMESPACE = "DMP_Pro"
+  final val HB_COLUNM_FAMILY = "tags"
+
   final val DEFAULT_VALUE = "未知"
   final val DEFAULT_NUM = 9999
   final val SEARCH_STR = "com"

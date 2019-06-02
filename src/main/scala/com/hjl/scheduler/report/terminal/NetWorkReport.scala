@@ -12,13 +12,10 @@ import org.apache.spark.sql.{DataFrame, SaveMode}
   * @date 2019/04/12
   * @email jiale.he@mail.hypers.com
   */
-object NetWorkReport extends JobComputing {
-  def main(args: Array[String]): Unit = {
-    checkParam(args, 2)
+class NetWorkReport extends JobComputing {
+  override def process(): Unit = {
     initAll(this.getClass.getName, true)
-    val Array(inputPath, outputPath) = args
-
-    val sourceDf: DataFrame = sqlContext.read.parquet(inputPath)
+    val sourceDf: DataFrame = sqlContext.read.parquet(ReportConstant.PARQUET_SOURCE_PATH)
     sourceDf.registerTempTable(ReportConstant.TEMP)
     val sql: String =
       """
@@ -40,7 +37,7 @@ object NetWorkReport extends JobComputing {
 
     val prop: Properties = getMysqlProperties()
 
-    resultDF.repartition(1).write.mode(SaveMode.Overwrite).json(outputPath)
+    resultDF.repartition(1).write.mode(SaveMode.Overwrite).json(ReportConstant.NETWORK_SINK_JSON_PATH)
     resultDF.write.mode(SaveMode.Append).jdbc(load.getString("jdbc.url"), ReportConstant.NETWORK_SINK_TABLE_NAME, prop)
 
     stopSparkContext()

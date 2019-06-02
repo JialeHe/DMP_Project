@@ -1,5 +1,6 @@
 package com.hjl.scheduler.parquet
 
+import com.hjl.constant.CommonConstant
 import com.hjl.scheduler.JobComputing
 import com.hjl.utils.{SchemaUtil, TypeConvertUtil}
 import org.apache.spark.rdd.RDD
@@ -16,17 +17,13 @@ import org.apache.spark.sql.{DataFrame, Row}
   * @date 2019/04/09
   * @email jiale.he@mail.hypers.com
   */
-object Bz2Parquet extends JobComputing {
-  def main(args: Array[String]): Unit = {
+class Bz2Parquet extends JobComputing {
 
-    // 检测参数,接受参数
-    checkParam(args, 2)
-    val Array(inputPath, outputPath) = args
+  override def process(): Unit = {
     // 初始化环境
     initAll(this.getClass.getName, true)
 
-    val sourceRDD: RDD[String] = sc.textFile(inputPath)
-
+    val sourceRDD: RDD[String] = sc.textFile(CommonConstant.SOURCE_PATH)
 
     val rowRDD: RDD[Row] = sourceRDD.map(line => line.split(",", -1))
       .filter(data => data.length >= 85)
@@ -63,7 +60,7 @@ object Bz2Parquet extends JobComputing {
       ))
     val df: DataFrame = sqlContext.createDataFrame(rowRDD, SchemaUtil.schema)
 
-    df.repartition(1).write.parquet(outputPath)
+    df.repartition(1).write.parquet(CommonConstant.PARQUET_SOURCE_PATH)
 
     stopSparkContext()
   }

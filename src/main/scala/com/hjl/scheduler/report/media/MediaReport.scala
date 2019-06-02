@@ -2,7 +2,7 @@ package com.hjl.scheduler.report.media
 
 import java.util.Properties
 
-import com.hjl.constant.ReportConstant
+import com.hjl.constant.{CommonConstant, ReportConstant}
 import com.hjl.scheduler.JobComputing
 import com.hjl.utils.JedisConnectionPool
 import org.apache.spark.rdd.RDD
@@ -25,8 +25,8 @@ object MediaReport extends JobComputing {
     val appRow: RDD[Row] = sourceDf.mapPartitions(partition => {
       val jedis: Jedis = JedisConnectionPool.getConnect
       partition.map(row => {
-        val appid: String = row.getAs[String]("appid")
-        val appname: String = jedis.hget("appdir", appid)
+        val appid: String = row.getAs[String](ReportConstant.APP_ID)
+        val appname: String = jedis.hget(CommonConstant.APPDIR_KEY, appid)
         Row(appid, appname)
       })
     })
@@ -37,7 +37,7 @@ object MediaReport extends JobComputing {
 
     val appDF: DataFrame = sqlContext.createDataFrame(appRow, schema).coalesce(20)
 
-    val resultDF = sourceDf.coalesce(20).drop("appname").join(appDF, "appid")
+    val resultDF = sourceDf.coalesce(20).drop(ReportConstant.APP_NAME).join(appDF, ReportConstant.APP_ID)
 
     resultDF.registerTempTable(ReportConstant.TEMP)
 
